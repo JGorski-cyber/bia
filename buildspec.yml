@@ -3,11 +3,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo "=== DEBUG - Verificando identidade ==="
-      - aws sts get-caller-identity
-      - echo "=== DEBUG - Testando acesso ao ECR ==="
-      - aws ecr describe-repositories --repository-names bia --region us-east-1
-      - echo "=== DEBUG - Tentando login no ECR ==="
+      - echo "Fazendo login no ECR..."
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 012169730544.dkr.ecr.us-east-1.amazonaws.com
       - REPOSITORY_URI=012169730544.dkr.ecr.us-east-1.amazonaws.com/bia
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
